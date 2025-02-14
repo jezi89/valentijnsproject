@@ -35,7 +35,6 @@ function App() {
 
                 setHintsLeft(prevHints => prevHints + 1); // ✅ Extra hint verdienen bij goed antwoord
                 setFeedbackMessage("❤️‍🔥 Goed Zo!!! ❤️‍🔥 \n Je hebt een extra hint verdiend!");
-
                 setIsCorrect(true); // ✅ Goed antwoord
             }
         } else {
@@ -71,10 +70,7 @@ function App() {
                 [randomWord]: wordArray.join("")
             }));
 
-            setHintRevealedWords(prev => ({
-                ...prev,
-                [randomWord]: true // ✅ Markeer als via hint onthuld
-            }));
+            setHintRevealedWords({[randomWord]: true}); // Track the word revealed by the hint
 
             setHintsLeft(hintsLeft - 1);
         }

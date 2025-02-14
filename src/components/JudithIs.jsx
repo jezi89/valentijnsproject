@@ -6,10 +6,15 @@ function JudithIs({revealedWords, hintRevealedWords, giveHint, hintsLeft}) {
                 <ul className="word-list">
                     {Object.keys(revealedWords).map((word, index) => (
                         <li key={index}
+                            data-word={word}
                             className={`${
-                                revealedWords[word] !== "_".repeat(word.length)
-                                    ? hintRevealedWords[word] ? "hint-revealed" : "revealed"
-                                    : ""
+                                revealedWords[word] === word
+                                    ? "correct-word"
+                                    : hintRevealedWords[word]
+                                        ? "hint-revealed"
+                                        : revealedWords[word] !== "_".repeat(word.length)
+                                            ? "revealed"
+                                            : ""
                             }`}
                         >
                             {revealedWords[word]}

@@ -59,13 +59,18 @@
 }
 
 @keyframes glowEffect {
-    from {
+    0% {
         box-shadow: 0px 0px 5px rgba(255, 215, 0, 0.4);
     }
-    to {
+    50% {
         box-shadow: 0px 0px 15px rgba(255, 215, 0, 0.8);
     }
+    100% {
+        box-shadow: 0px 0px 0px rgba(255, 215, 0, 0);
+        opacity: 1; /* Ensure the element is fully visible at the end */
+    }
 }
+
 
 @keyframes fadeIn {
     from {
@@ -99,6 +104,7 @@
     gap: 24px;
     width: 80%;
     padding: 10px;
+
 }
 
 .word-list li {
@@ -115,12 +121,10 @@
     margin: auto;
 }
 
-.word-list li.revealed:not(.hint-revealed) {
-    animation: fadeIn 0.5s ease-out, glowEffect 2s ease-in-out alternate;
-    pointer-events: none; /* ✅ voorkomt dat klikbaar blijft */
-    border: 3px solid var(--gold-border); /* ✅ Permanente gouden border */
+.word-list li.hint-revealed {
+    animation: glowEffect 0.8s ease-out;
+    animation-fill-mode: forwards; /* Maintain the final state of the animation */
 }
-
 
 .word-list li:hover {
     transform: scale(1.05);
@@ -136,7 +140,7 @@ button:active {
 
 /* 🌟 Speciale gloed bij correct woord */
 .correct-word {
-    animation: glowEffect 2s ease-in-out infinite alternate;
+    border: 3px solid var(--gold-border); /* Permanente gouden border */
 }
 
 .love-emoji {
@@ -270,16 +274,17 @@ button {
     margin: 30px auto;
 }
 
-/*button:hover {*/
-/*    background: var(--button-hover);*/
-/*    transform: scale(1.05);*/
-/*    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);*/
-/*    color: var(--primary-color);*/
-/*}*/
+button:hover {
+    background: var(--button-hover);
+    transform: scale(1.05);
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+    color: var(--primary-color);
+    cursor: pointer;
+}
 
-/*button:focus {*/
-/*    outline: 3px solid var(--button-focus);*/
-/*}*/
+button:focus {
+    outline: 3px solid var(--button-focus);
+}
 
 
 button:active {

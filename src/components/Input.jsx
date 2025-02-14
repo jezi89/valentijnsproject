@@ -16,7 +16,6 @@ function Input({query, setQuery, checkGuess, feedbackMessage, setFeedbackMessage
 
     return (
         <>
-            {console.log(feedbackMessage)}
             <input
                 type="text"
                 value={query}
