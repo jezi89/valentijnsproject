@@ -1,0 +1,40 @@
+@use "variables" as *;
+@use "mixins" as *;
+@use "animations" as *;
+
+.hero {
+  @include flex-center;
+  flex-direction: column;
+  text-align: center;
+  height: 100vh;
+  width: 100%;
+  background: $bg-gradient;
+  color: $text-light;
+  padding: 20px;
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2);
+
+  h1 {
+    font-size: 48px;
+    font-family: $primary-font;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-subtitle {
+    font-size: 24px;
+    font-family: $secondary-font;
+    margin-top: 10px;
+  }
+
+  .hero-content {
+    max-width: 600px;
+    margin-top: 20px;
+    font-size: 18px;
+    opacity: 0.9;
+  }
+
+  .love-emoji {
+    font-size: 32px;
+    position: absolute;
+    animation: floatEmoji 3s ease-in-out infinite;
+  }
+}

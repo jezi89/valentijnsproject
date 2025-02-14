@@ -1,0 +1,28 @@
+@use "variables" as *;
+@use "mixins" as *;
+@use "animations";
+@use "buttons";
+@use "inputs";
+@use "lists";
+@use "hero";
+@use "layout";
+
+// 🌍 Algemene stijlen
+body {
+  background: $primary-color;
+  color: $highlight-color;
+  font-family: $base-font;
+  margin: 0;
+  height: 100vh;
+  @include flex-center;
+}
+
+h1, h2, h3 {
+  font-family: $secondary-font;
+  color: $text-light;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  @include button-style;
+}

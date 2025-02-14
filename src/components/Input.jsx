@@ -27,7 +27,7 @@ function Input({query, setQuery, checkGuess, feedbackMessage, setFeedbackMessage
                 }}
                 placeholder={placeholder}
             />
-            <button onClick={checkGuess}>Check woord</button>
+            <button className="button button-primary" onClick={checkGuess}>Check woord</button>
 
             {/* ✅ Dynamische feedback styling met fade-out */}
             <div style={{

@@ -1,0 +1,40 @@
+@use "variables" as *;
+
+// 📌 Flexbox helper
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 📌 Media Query Helper
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == small {
+    @media (max-width: 600px) {
+      @content;
+    }
+  } @else if $breakpoint == medium {
+    @media (max-width: 900px) {
+      @content;
+    }
+  } @else if $breakpoint == large {
+    @media (max-width: 1200px) {
+      @content;
+    }
+  }
+}
+
+// 📌 Gestylede knoppen
+@mixin button-style {
+  font-family: $primary-font;
+  background: $accent-color;
+  color: $text-light;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: lighten($accent-color, 10%);
+  }
+}

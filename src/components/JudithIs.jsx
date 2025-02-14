@@ -1,4 +1,4 @@
-function JudithIs({revealedWords, hintRevealedWords, giveHint, hintsLeft}) {
+function JudithIs({revealedWords, hintRevealedWords}) {
     return (
         <>
             <div className="word-list-container">

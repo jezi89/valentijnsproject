@@ -1,0 +1,39 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid $accent-color;
+  border-radius: 6px;
+  font-size: 16px;
+  font-family: $base-font;
+  outline: none;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 5px rgba(139, 0, 0, 0.5);
+  }
+}
+
+label {
+  font-size: 14px;
+  font-weight: bold;
+  color: $text-dark;
+}
+
+.input-error {
+  border-color: $warning-color;
+}
+
+.input-success {
+  border-color: $primary-color;
+}

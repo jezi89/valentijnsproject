@@ -1,0 +1,41 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.heart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.hero,
+.word-list-container {
+  margin-bottom: 40px;
+}
+
+.reset-button-container {
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+  }
+
+  .word-list {
+    grid-template-columns: 1fr;
+  }
+}

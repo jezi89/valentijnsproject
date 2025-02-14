@@ -1,0 +1,35 @@
+@use "variables" as *;
+
+@keyframes floatEmoji {
+  0% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animated {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.love-emoji {
+  animation: floatEmoji 3s ease-in-out infinite;
+}

@@ -71,7 +71,7 @@ function App() {
 
     return (
         <div className="heart-container">
-            <div className="hero">
+            <div className="hero animated">
                 <Header/>
                 <Input placeholder="Raad een woord..."
                        query={query}
@@ -93,7 +93,7 @@ function App() {
                     setHintsLeft={setHintsLeft}
                 />
                 <div className="reset-button-container">
-                    <button onClick={resetGame}>🔄 Reset Game</button>
+                    <button className="button button-primary" onClick={resetGame}>🔄 Reset Game</button>
                 </div>
 
             </div>
