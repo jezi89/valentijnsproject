@@ -122,7 +122,7 @@
 }
 
 .word-list li.hint-revealed {
-    animation: glowEffect 0.8s ease-out;
+    animation: glowEffect 2s ease-out;
     animation-fill-mode: forwards; /* Maintain the final state of the animation */
 }
 
