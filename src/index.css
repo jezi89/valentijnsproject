@@ -34,14 +34,14 @@
 }
 
 
-@keyframes fallingHearts {
-    from {
-        background-position-y: 0;
-    }
-    to {
-        background-position-y: 100vh;
-    }
-}
+/*@keyframes fallingHearts {*/
+/*    from {*/
+/*        background-position-y: 0;*/
+/*    }*/
+/*    to {*/
+/*        background-position-y: 100vh;*/
+/*    }*/
+/*}*/
 
 @keyframes fadeEmoji {
     0% {

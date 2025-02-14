@@ -17,7 +17,7 @@ function App() {
 
         }, {})
     );
-    const [hintsLeft, setHintsLeft] = useState(10);
+    const [hintsLeft, setHintsLeft] = useState(3);
     const [isCorrect, setIsCorrect] = useState(null);  // Bepaalt of het antwoord goed is
     const [hintRevealedWords, setHintRevealedWords] = useState({});  // Houdt bij welke woorden via een hint zijn onthuld
 
