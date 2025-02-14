@@ -1,0 +1,387 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Playfair+Display:wght@500;700&display=swap');
+
+
+:root {
+    /* 🎨 Kleuren */
+
+    /* 🌹 Basis Kleuren */
+    --primary-color: #8B0000; /* Diep Rood */
+    --secondary-color: #FF4D6D; /* Roze Rood */
+
+    /* 💕 Accentkleuren */
+    --accent-color: #FF99AC; /* Zacht Roze */
+    --highlight-color: #FFD6DA; /* Lichtroze */
+    --warning-color: #FF3366; /* Fel Rood voor waarschuwingen */
+
+    /* 🎨 UI Specifieke Kleuren */
+    --button-hover: #FFB3C1; /* Lichter Roze voor hover-effect */
+    --button-focus: #FF5A7C; /* Dieper Roze voor focus */
+
+    /* 🖋️ Tekstkleuren */
+    --text-light: #FFE6EB; /* Lichtroze tekst voor betere leesbaarheid */
+    --text-dark: #5A0000; /* Donkerrood voor contrasterende tekst */
+    --gold-border: #FFD700; /* Gouden border voor correcte antwoorden */
+
+    /* 🎭 Achtergrondkleuren */
+    /* Gradients */
+    --gradient-main: linear-gradient(135deg, #8B0000 10%, #FF4D6D 40%, #FF99AC 90%);
+    --bg-gradient: linear-gradient(to bottom, #ff758c, #ff7eb3); /* Romantisch kleurverloop */
+
+    /* ✍️ Fonts */
+    --primary-font: 'Playfair Display', serif;
+    --secondary-font: 'Dancing Script', cursive;
+    --base-font: 'Arial', sans-serif;
+}
+
+
+@keyframes fallingHearts {
+    from {
+        background-position-y: 0;
+    }
+    to {
+        background-position-y: 100vh;
+    }
+}
+
+@keyframes fadeEmoji {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.2);
+    }
+}
+
+@keyframes glowEffect {
+    from {
+        box-shadow: 0px 0px 5px rgba(255, 215, 0, 0.4);
+    }
+    to {
+        box-shadow: 0px 0px 15px rgba(255, 215, 0, 0.8);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.word-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.word-list-title {
+    font-size: 1.4em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 12px;
+    color: var(--text-light);
+}
+
+.word-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    width: 80%;
+    padding: 10px;
+}
+
+.word-list li {
+    font-size: 1.6em; /* ✅ Grotere tekst */
+    font-weight: bold;
+    color: var(--text-dark);
+    text-align: center;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease-in-out;
+    width: 90%;
+    margin: auto;
+}
+
+.word-list li.revealed:not(.hint-revealed) {
+    animation: fadeIn 0.5s ease-out, glowEffect 2s ease-in-out alternate;
+    pointer-events: none; /* ✅ voorkomt dat klikbaar blijft */
+    border: 3px solid var(--gold-border); /* ✅ Permanente gouden border */
+}
+
+
+.word-list li:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+button:active {
+    background-color: var(--button-hover);
+    box-shadow: none;
+    background-image: none; /* ✅ voorkomt grijze achtergrond */
+    outline: none;
+}
+
+/* 🌟 Speciale gloed bij correct woord */
+.correct-word {
+    animation: glowEffect 2s ease-in-out infinite alternate;
+}
+
+.love-emoji {
+    position: absolute;
+    font-size: 2.5rem;
+    opacity: 0;
+    animation: fadeEmoji 3s ease-in-out;
+}
+
+
+.heart-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.heart-container::before,
+.heart-container::after {
+    content: "";
+    position: absolute;
+    width: 20vw;
+    height: 100vh;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff4d6d"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+    background-size: 40px;
+    background-repeat: repeat;
+    animation: fallingHearts 35s cubic-bezier(0.3, 0.1, 0.7, 0.9) infinite;
+    animation-fill-mode: both;
+}
+
+/* ✅ Linkerkolom fix */
+.heart-container::before {
+    left: 0;
+    transform: scaleX(-1);
+    background-position: left top;
+    animation-duration: 37s;
+}
+
+/* ✅ Rechterkolom correct uitlijnen */
+.heart-container::after {
+    right: 0;
+    background-position: left top;
+    animation-duration: 32s; /* Kleine variatie *//* LET OP: Dit was eerder 'right top' en kan een probleem hebben veroorzaakt */
+}
+
+body {
+    background: var(--primary-color);
+    color: var(--highlight-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+
+.hero {
+
+    font-family: var(--primary-font);
+    background: var(--bg-gradient);
+    padding: 10px;
+    border-radius: 12px;
+    text-align: center;
+    color: var(--text-light);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative; /* Zorgt dat de ::before en ::after goed werken */
+    z-index: 2; /* Zorg ervoor dat de hero bovenop ligt */
+    background: var(--gradient-main);
+    /*padding: 50px;*/
+    /*text-align: center;*/
+    /*color: white;*/
+    /*border-radius: 15px;*/
+    /*box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* ✅ Houdt de onderkant goed */
+    min-height: 60vh;
+    max-height: 95vh;
+    width: 50vw;
+    margin: auto;
+
+
+    /* Glas-effect */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);;
+}
+
+
+h1, h2, h3 {
+    font-size: 1.8rem;
+    font-family: var(--secondary-font);
+    color: var(--text-light);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    padding: 0.5em;
+    color: var(--text-light);
+}
+
+a {
+    color: var(--primary-color);
+}
+
+
+button {
+    font-family: var(--primary-font);
+    background: var(--accent-color);
+    color: var(--text-light);
+    padding: 16px 20px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    max-width: 40%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px auto;
+    font-size: 1.4em;
+    letter-spacing: 1px;
+}
+
+.checkButton {
+    margin: 30px auto;
+}
+
+/*button:hover {*/
+/*    background: var(--button-hover);*/
+/*    transform: scale(1.05);*/
+/*    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);*/
+/*    color: var(--primary-color);*/
+/*}*/
+
+/*button:focus {*/
+/*    outline: 3px solid var(--button-focus);*/
+/*}*/
+
+
+button:active {
+    background-color: var(--button-hover);
+    box-shadow: none;
+    background-image: none; /* ✅ voorkomt grijze achtergrond */
+    outline: none;
+}
+
+
+h1 {
+    color: var(--highlight-color);
+    font-size: 2rem;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+
+li {
+    background-color: var(--highlight-color);
+    color: var(--secondary-color);
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+li:hover {
+    background-color: var(--button-hover);
+    transform: scale(1.03);
+}
+
+input {
+    font-family: var(--primary-font);
+    border: 2px solid var(--secondary-color);
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+}
+
+
+input[type="text"] {
+    background-color: rgba(255, 255, 255, 0.2); /* Subtiele transparantie */
+    color: white;
+    font-size: 16px;
+    padding: 12px;
+    width: 80%;
+    border: 2px solid rgba(255, 255, 255, 0.4); /* Witte rand */
+    border-radius: 8px;
+    outline: none;
+    text-align: center;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Stijl bij focus */
+input[type="text"]:focus {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 2px solid var(--warning-color); /* Frambozenrode rand */
+    box-shadow: 0 0 10px var(--warning-color); /* Zachte glow */
+    transform: scale(1.02);
+}
+
+/* Placeholder subtieler maken */
+input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+}
+
+@media (max-width: 912px) {
+    .word-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* ✅ Houdt de lijst op grotere schermen in 2 kolommen */
+        gap: 12px; /* ✅ Verminder de ruimte tussen de items */
+        width: 90%; /* ✅ Lijst breder maken voor betere uitlijning */
+    }
+
+    .word-list li {
+        padding: 6px 10px; /* ✅ Compactere items */
+        font-size: 1.3em; /* ✅ Kleinere tekstgrootte */
+        max-width: 95%;
+    }
+
+    .hero {
+        width: 95vw; /* ✅ Breder op kleine schermen voor betere leesbaarheid */
+        max-width: 500px; /* ✅ Voorkomt dat de container te breed wordt */
+        min-height: auto; /* ✅ Zorgt dat de hoogte dynamisch blijft */
+        padding: 20px; /* ✅ Extra padding om elementen binnen de container te houden */
+    }
+
+    button {
+        max-width: 80%; /* ✅ Knoppen minder breed maken op mobiel */
+    }
+
+
+}
