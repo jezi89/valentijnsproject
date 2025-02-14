@@ -1,21 +1,22 @@
 import {useEffect, useState} from 'react';
 
 function Input({query, setQuery, checkGuess, feedbackMessage, setFeedbackMessage, isCorrect, placeholder}) {
-    const [visibleMessage, setVisibleMessage] = useState(feedbackMessage);
+    // const [visibleMessage, setVisibleMessage] = useState(feedbackMessage);
 
     useEffect(() => {
-        if (feedbackMessage) {
-            setVisibleMessage(feedbackMessage);
-            const timeout = setTimeout(() => {
-                setVisibleMessage("");
-                setFeedbackMessage("");
-            }, 3000);
-            return () => clearTimeout(timeout);
-        }
+        // if (feedbackMessage) {
+        //     setVisibleMessage(feedbackMessage);
+        const timeout = setTimeout(() => {
+            // setVisibleMessage("");
+            setFeedbackMessage("");
+        }, 3000);
+        return () => clearTimeout(timeout);
+
     }, [feedbackMessage]);
 
     return (
         <>
+            {console.log(feedbackMessage)}
             <input
                 type="text"
                 value={query}
@@ -39,14 +40,14 @@ function Input({query, setQuery, checkGuess, feedbackMessage, setFeedbackMessage
                 <p style={{
                     color: isCorrect ? "green" : "black",
                     transition: "opacity 0.5s ease-in-out",
-                    opacity: visibleMessage ? 1 : 0,
+                    opacity: feedbackMessage ? 1 : 0,
                     whiteSpace: "pre-line",
                     minHeight: "24px", /* ✅ Zorgt ervoor dat er altijd ruimte is */
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center"
                 }}>
-                    {visibleMessage || "‎"} {/* Onzichtbare spatie om ruimte te reserveren */}
+                    {feedbackMessage || "‎"} {/* Onzichtbare spatie om ruimte te reserveren */}
                 </p>
             </div>
 

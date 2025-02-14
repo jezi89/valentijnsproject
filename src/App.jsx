@@ -14,6 +14,7 @@ function App() {
         secretWords.reduce((acc, word) => {
             acc[word] = "_".repeat(word.length);
             return acc;
+
         }, {})
     );
     const [hintsLeft, setHintsLeft] = useState(10);
@@ -33,7 +34,7 @@ function App() {
                 }));
 
                 setHintsLeft(prevHints => prevHints + 1); // ✅ Extra hint verdienen bij goed antwoord
-                setFeedbackMessage("❤️‍🔥 Goed Zo!!! ❤️‍🔥 \nJe hebt een extra hint verdiend!");
+                setFeedbackMessage("❤️‍🔥 Goed Zo!!! ❤️‍🔥 \n Je hebt een extra hint verdiend!");
 
                 setIsCorrect(true); // ✅ Goed antwoord
             }
@@ -53,7 +54,9 @@ function App() {
             if (hiddenWords.length === 0) return;
 
             const randomWord = hiddenWords[Math.floor(Math.random() * hiddenWords.length)];
+
             const wordArray = revealedWords[randomWord].split("");
+
             let hiddenIndices = wordArray
                 .map((char, i) => (char === "_" ? i : null))
                 .filter(i => i !== null);
@@ -87,10 +90,10 @@ function App() {
     return (
 
         <div className="heart-container">
-
             <div className="hero">
                 <h1>Waarom houdt Jerôme van jou?!</h1>
                 <Input placeholder="Raad een woord..." query={query} setQuery={setQuery}
+                       setFeedbackMessage={setFeedbackMessage}
                        checkGuess={checkGuess} feedbackMessage={feedbackMessage}
                        isCorrect={isCorrect} /* ✅ Doorsturen naar Input *//>
                 <JudithIs
