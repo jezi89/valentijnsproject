@@ -2,105 +2,103 @@ import {useEffect, useState} from "react";
 import Input from "./components/Input.jsx";
 import JudithIs from "./components/JudithIs.jsx";
 import createFloatingEmoji from "./helpers/loveEmojiGen.js";
+import {checkGuess, giveHint} from "./helpers/gameLogic.js";
+import Header from "./components/Header.jsx";
+import HintButton from "./components/buttons/HintButton.jsx";
+
 
 function App() {
     const secretWords = ["Lief", "Knap", "Spontaan", "Zorgzaam", "Avontuurlijk", "Sportief", "Gedreven", "Netjes", "Kalm", "Doorzetter"];
-
     const [query, setQuery] = useState("");
-    const [feedbackMessage, setFeedbackMessage] = useState(""); // ✅ Nieuwe naam
-
-
+    const [feedbackMessage, setFeedbackMessage] = useState("");
     const [revealedWords, setRevealedWords] = useState(
         secretWords.reduce((acc, word) => {
             acc[word] = "_".repeat(word.length);
             return acc;
-
         }, {})
     );
     const [hintsLeft, setHintsLeft] = useState(3);
-    const [isCorrect, setIsCorrect] = useState(null);  // Bepaalt of het antwoord goed is
-    const [hintRevealedWords, setHintRevealedWords] = useState({});  // Houdt bij welke woorden via een hint zijn onthuld
-
-    function checkGuess() {
-        const normalizedQuery = query.trim().toLowerCase();
-        const capitalizedWord = normalizedQuery.charAt(0).toUpperCase() + normalizedQuery.slice(1);
-
-
-        if (secretWords.some(word => word.toLowerCase() === normalizedQuery)) {
-            if (revealedWords[capitalizedWord] !== capitalizedWord) {
-                setRevealedWords(prevRevealedWords => ({
-                    ...prevRevealedWords,
-                    [capitalizedWord]: capitalizedWord
-                }));
-
-                setHintsLeft(prevHints => prevHints + 1); // ✅ Extra hint verdienen bij goed antwoord
-                setFeedbackMessage("❤️‍🔥 Goed Zo!!! ❤️‍🔥 \n Je hebt een extra hint verdiend!");
-                setIsCorrect(true); // ✅ Goed antwoord
-            }
-        } else {
-            setFeedbackMessage("Dat is niet correct, probeer opnieuw!"); // ✅ Toon foutmelding
-            setIsCorrect(false); // ❌ Fout antwoord
-        }
-
-        setQuery(""); // ✅ Zorg dat het invoerveld altijd wordt geleegd
-    }
-
-    function giveHint() {
-        if (hintsLeft > 0) {
-            const hiddenWords = secretWords.filter(
-                word => revealedWords[word].includes("_")
-            );
-            if (hiddenWords.length === 0) return;
-
-            const randomWord = hiddenWords[Math.floor(Math.random() * hiddenWords.length)];
-
-            const wordArray = revealedWords[randomWord].split("");
-
-            let hiddenIndices = wordArray
-                .map((char, i) => (char === "_" ? i : null))
-                .filter(i => i !== null);
-
-            if (hiddenIndices.length === 0) return;
-
-            const randomIndex = hiddenIndices[Math.floor(Math.random() * hiddenIndices.length)];
-            wordArray[randomIndex] = randomWord[randomIndex];
-
-            setRevealedWords(prevRevealedWords => ({
-                ...prevRevealedWords,
-                [randomWord]: wordArray.join("")
-            }));
-
-            setHintRevealedWords({[randomWord]: true}); // Track the word revealed by the hint
-
-            setHintsLeft(hintsLeft - 1);
-        }
-    }
+    const [isCorrect, setIsCorrect] = useState(null);
+    const [hintRevealedWords, setHintRevealedWords] = useState({});
+    const BACKEND_URL = "https://valentijnsproject.onrender.com";
 
 
     useEffect(() => {
-        const interval = setInterval(createFloatingEmoji, 4500); // Elke 2.5 sec een emoji
+        const fetchGameState = async () => {
+            try {
+                const response = await fetch(`${BACKEND_URL}/game-state`);
+
+
+                const data = await response.json();
+
+                setRevealedWords(prevWords => ({
+                    ...prevWords,
+                    ...data.guessedWords // ✅ Vul de lijst aan met opgehaalde woorden
+                }));
+                setHintsLeft(data.hintsLeft);
+            } catch (error) {
+                console.error("❌ Error fetching game state:", error);
+            }
+        };
+
+        fetchGameState();
+    }, []);
+
+    useEffect(() => {
+        const interval = setInterval(createFloatingEmoji, 4500);
         return () => clearInterval(interval);
     }, []);
 
+    const resetGame = async () => {
+        try {
+            const response = await fetch(`${BACKEND_URL}/reset-game`, {method: "POST"});
+            const data = await response.json();
+
+            setRevealedWords(
+                secretWords.reduce((acc, word) => {
+                    acc[word] = "_".repeat(word.length);
+                    return acc;
+                }, {})
+            );
+            setHintsLeft(3);
+            setFeedbackMessage("🔄 Game is gereset!");
+            console.log("✅ Game reset:", data);
+        } catch (error) {
+            console.error("❌ Error resetting game:", error);
+        }
+    };
+
 
     return (
-
         <div className="heart-container">
             <div className="hero">
-                <h1>Waarom houdt Jerôme van jou?!</h1>
-                <Input placeholder="Raad een woord..." query={query} setQuery={setQuery}
+                <Header/>
+                <Input placeholder="Raad een woord..."
+                       query={query}
+                       setQuery={setQuery}
                        setFeedbackMessage={setFeedbackMessage}
-                       checkGuess={checkGuess} feedbackMessage={feedbackMessage}
-                       isCorrect={isCorrect} /* ✅ Doorsturen naar Input *//>
-                <JudithIs
-                    revealedWords={revealedWords}
-                    hintRevealedWords={hintRevealedWords} /* ✅ Doorsturen naar JudithIs */
-                    giveHint={giveHint}
-                    hintsLeft={hintsLeft}
+                       checkGuess={() => checkGuess(query, setQuery, secretWords, revealedWords, setRevealedWords, setHintsLeft, setFeedbackMessage, setIsCorrect)}
+                       feedbackMessage={feedbackMessage}
+                       isCorrect={isCorrect}
                 />
-            </div>
-        </div>
+                <JudithIs revealedWords={revealedWords}
+                          hintRevealedWords={hintRevealedWords}
+                />
+                <HintButton
+                    secretWords={secretWords}
+                    revealedWords={revealedWords}
+                    setRevealedWords={setRevealedWords}
+                    setHintRevealedWords={setHintRevealedWords}
+                    hintsLeft={hintsLeft}
+                    setHintsLeft={setHintsLeft}
+                />
+                <div className="reset-button-container">
+                    <button onClick={resetGame}>🔄 Reset Game</button>
+                </div>
 
+            </div>
+
+        </div>
     );
 }
 

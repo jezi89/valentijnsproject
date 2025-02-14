@@ -22,10 +22,6 @@ function JudithIs({revealedWords, hintRevealedWords, giveHint, hintsLeft}) {
                     ))}
                 </ul>
             </div>
-            <button onClick={giveHint} disabled={hintsLeft === 0}>
-                Geef een hint
-            </button>
-            <h4> (nog {hintsLeft} over)</h4>
         </>
     );
 }
