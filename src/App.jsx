@@ -8,7 +8,7 @@ import HintButton from "./components/buttons/HintButton.jsx";
 
 
 function App() {
-    const secretWords = ["Lief", "Knap", "Spontaan", "Zorgzaam", "Avontuurlijk", "Sportief", "Gedreven", "Netjes", "Kalm", "Doorzetter"];
+    const secretWords = ["Lief", "Knap", "zachtaardig", "slim", "Avontuurlijk", "Sportief", "behulpzaam", "geil", "creatief", "vrolijk"];
     const [query, setQuery] = useState("");
     const [feedbackMessage, setFeedbackMessage] = useState("");
     const [revealedWords, setRevealedWords] = useState(
